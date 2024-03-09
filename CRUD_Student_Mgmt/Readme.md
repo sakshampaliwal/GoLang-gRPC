@@ -147,11 +147,7 @@ To run the client and send a requests to the server:
 
 
 ## Working Diagram
-![Architecture_Diagram](https://github.com/abcd/xyz/assets/158018910/f37174fd-e53b-4fb0-90e4-5c58e8cd993f)
-
-Flow:
-![flow_diagram](https://github.com/abcd/xyz/assets/158018910/21eb8615-c94d-4cf5-8a5d-66bfd27aef36)
-
+![Architecture_Diagram](https://github.com/sakshampaliwal/GoLang-gRPC/assets/83136084/e157db9f-1fb1-4c25-aeea-6032333c1bc1)
 
 ## References
 - https://go.dev/doc/
