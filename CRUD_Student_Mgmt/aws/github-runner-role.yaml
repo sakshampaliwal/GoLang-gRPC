@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create runner role
+Parameters:
+  ProjectName:
+    Type: String
+    Description: "The project name all lowercase and kebab-case"
+    ConstraintDescription: "ProjectName must be lower case with dashes between each word"
+    MinLength: 5
+  GhRepoName:
+    Type: String
+    Description: "The github repo name all lowercase and kebab-case"
+    ConstraintDescription: "Git hub repository name"
+  Region:
+    Type: String
+    Description: "The region name all lowercase and kebab-case"
+  Environment:
+    Type: String
+    Description: "The aws account environment"
+    AllowedValues:
+      - dev
+      - prod
+    Default: dev
+  AccountNumber:
+    Type: String
+    Description: "The aws account number to deploy into"
+    MinLength: 5
+  OidcProviderName:
+    Type: String
+    Description: "The name given to the OIDC provider (github)"
+    Default: "token.actions.githubusercontent.com" 
+    MinLength: 5
+Resources:
+  MyIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ["", [!Ref ProjectName, "-cicd-pipeline-role"]]
+      AssumeRolePolicyDocument: !Sub |
+          {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Principal": {
+                          "Federated": "arn:aws:iam::${AccountNumber}:oidc-provider/${OidcProviderName}"
+                      },
+                      "Action": "sts:AssumeRoleWithWebIdentity",
+                      "Condition": {
+                          "StringLike": {
+                              "${OidcProviderName}:aud": "sts.amazonaws.com",
+                              "${OidcProviderName}:sub": "repo:"abcd"/${GhRepoName}:environment:${Environment}"
+                          }
+                      }
+                  }
+              ]
+          }
+      Policies:
+        - PolicyName: !Join ["", [!Ref ProjectName, "-cicd-runner-permissions"]]
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ecr:PutLifecyclePolicy"
+                  - "ecr:BatchDeleteImage"
+                  - "ecr:BatchCheckLayerAvailability"
+                  - "ecr:DescribeRepositories"
+                  - "ecr:InitiateLayerUpload"
+                  - "ecr:UploadLayerPart"
+                  - "ecr:CompleteLayerUpload"
+                  - "ecr:PutImage"
+                  - "ecr:CreateRepository"
+                  - "ecr:BatchGetImage"
+                  - "ecr:DescribeImages"
+                  - "ecr:GetDownloadUrlForLayer"
+                Resource: !Sub "arn:aws:ecr:${Region}:${AccountNumber}:repository/${GhRepoName}"
+              - Effect: Allow
+                Action: "ecr:GetAuthorizationToken"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "cloudformation:CreateStack"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:UpdateStack"
+                  - "cloudformation:DeleteStack"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "sts:GetCallerIdentity"
+                Resource: "*"

@@ -1,0 +1,10 @@
+# Go specific files
+go.mod
+go.sum
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib

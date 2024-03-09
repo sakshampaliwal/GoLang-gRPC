@@ -1,0 +1,47 @@
+syntax = "proto3";
+option go_package ="/gencode";
+
+service CRUDService {
+    rpc Create(CreateRequest) returns (CreateResponse);
+    rpc Read(ReadRequest) returns (ReadResponse);
+    rpc Update(UpdateRequest) returns (UpdateResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message CreateRequest {
+    int64 rollno = 1;
+    string name = 2;
+    string branch = 3;
+}
+
+message CreateResponse {
+    int64 rollno = 1;
+    string createmsg = 2;
+}
+
+message ReadRequest {
+    int64 rollno = 1;
+}
+
+message ReadResponse {
+    string name = 1;
+    string branch = 2;
+}
+
+message UpdateRequest {
+    int64 rollno = 1;
+    string name = 2;
+    string branch = 3;
+}
+
+message UpdateResponse {
+    string umsg = 1;
+}
+
+message DeleteRequest {
+    int64 rollno = 1;
+}
+
+message DeleteResponse {
+    string dmsg = 1;
+}
