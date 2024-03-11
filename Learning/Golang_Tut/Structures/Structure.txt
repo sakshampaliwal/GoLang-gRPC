@@ -1,0 +1,95 @@
+Struct allows you to group together variables under a single name, and each variable in the struct is called a field.
+
+Unlike arrays or slices, which are homogenous, structs can contain heterogeneous data.
+type <name> struct {
+ // field1 type
+ // field2 type
+{
+
+type Person struct {
+   name  string
+   age   int
+   email string
+}
+
+Once you have defined a struct, you can also create instances (or objects) of that struct. 
+person := Person{
+   name:  "Andy Brinker",
+   age:   40,
+   email: "andy@example.com",
+}
+
+fmt.Println(person.name)
+fmt.Println(person.age)
+
+Structs and methods:
+Go allows you to define methods on structs, A method is a function associated with a specific struct type.
+
+type Rectangle struct {
+   width  float64
+   height float64
+}
+ 
+ 
+// Method defined on the Rectangle struct
+func (r Rectangle) Area() float64 {
+   return r.Width * r.Height
+}
+
+We define a method called Area() on the Rectangle struct.
+
+rect := Rectangle{width: 8, height: 6}
+area := rect.Area()
+fmt.Println(area)
+
+// create an instance of struct
+var person1 Person
+
+An instance of a struct can also be created with the new keyword. 
+It is then possible to assign data values to the data fields using dot notation.
+rect1 := new(rectangle)
+rect1.length = 10
+rect1.breadth = 20
+
+Creates an instance of rectangle struct by using a pointer address operator is denoted by & symbol:
+type rectangle struct {
+	length  int
+	breadth int
+	color   string
+}
+
+func main() {
+	var rect1 = &rectangle{10, 20, "Green"} // Can't skip any value
+	fmt.Println(rect1)
+In this case, we initialize all fields of the rectangle struct. 
+It's mandatory to provide values for all fields when using this initialization syntax.
+
+	var rect2 = &rectangle{}
+	rect2.length = 10
+	rect2.color = "Red"
+	fmt.Println(rect2) // breadth skipped
+Here, we create a new instance of rectangle and then assign values to its fields individually. In this example, we skip providing a value for breadth, and it defaults to its zero value, which is 0 for an integer field.
+
+	var rect3 = &rectangle{}
+	(*rect3).breadth = 10
+	(*rect3).color = "Blue"
+	fmt.Println(rect3) // length skipped
+    Here, we declare a variable rect3 and assign it to a pointer to a new instance of the rectangle struct. Since we're using the & operator, rect3 holds the memory address of the newly allocated rectangle struct. This struct is initialized with the zero values of its fields (length, breadth, and color).
+    In Go, accessing fields of a struct via a pointer requires the use of the * operator to dereference the pointer. So, *rect3 dereferences rect3, giving access to the underlying rectangle struct, and then .breadth accesses the breadth field of that struct. We set its value to 10.
+}
+
+Anonymous Structs:
+It is just like a normal struct, but it is defined without a name and therefore cannot be referenced elsewhere in the code.
+If a struct is only meant to be used once, then it makes sense to declare it in such a way that developers down the road won’t be tempted to accidentally use it again.
+
+E.g:
+newCar := struct {
+    make    string
+    model   string
+    mileage int
+}{
+    make:    "Ford",
+    model:   "Taurus",
+    mileage: 200000,
+}
+

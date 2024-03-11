@@ -1,0 +1,37 @@
+A map is a data structure that provides you with an unordered collection of key/value pairs
+The strength of a map is its ability to retrieve data quickly based on the key.
+A map is implemented using a hash table, which is providing faster lookups on the data element and you can easily retrieve a value by providing the key. Maps are unordered collections, and there's no way to predict the order in which the key/value pairs will be returned. 
+
+
+Syntax: map[keyType]valueType{}
+
+func main() {
+    // Declaration and initialization of a map
+    // Syntax: map[keyType]valueType{}
+    var myMap = map[string]int{}
+
+    // Adding elements to the map
+    myMap["apple"] = 5
+    myMap["banana"] = 3
+    myMap["orange"] = 7
+
+    // Accessing elements of the map
+    fmt.Println("Number of apples:", myMap["apple"])
+    fmt.Println("Number of bananas:", myMap["banana"])
+
+    // Modifying elements of the map
+    myMap["apple"] = 10
+    fmt.Println("Updated number of apples:", myMap["apple"])
+
+    // Deleting elements from the map
+    delete(myMap, "banana")
+    fmt.Println("Map after deleting banana:", myMap)
+
+    // Checking if a key exists in the map
+    val, exists := myMap["orange"]
+    if exists {
+        fmt.Println("Number of oranges:", val)
+    } else {
+        fmt.Println("Orange not found in the map")
+    }
+}

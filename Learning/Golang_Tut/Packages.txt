@@ -1,0 +1,5 @@
+Packages:
+A package is nothing but a directory inside your Go workspace containing one or more Go source files, or other Go packages.
+Every Go source file belongs to a package. To declare a source file to be part of a package, we use the following syntax:
+package <packagename>
+

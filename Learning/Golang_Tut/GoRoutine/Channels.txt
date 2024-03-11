@@ -1,0 +1,66 @@
+Channels provide a way for goroutines to send and receive values, allowing them to communicate with each other and coordinate their actions.
+a channel is a built-in data structure that is used for communication and synchronization between goroutines (concurrent functions).
+
+Channels are created using the built-in make function and can be buffered or unbuffered.
+You can send and value into a channel using the <- operator.
+
+Unbuffered Channel:
+An unbuffered channel has no capacity to store data. When a value is sent on an unbuffered channel, the sender will block until another goroutine is ready to receive the value.
+Similarly, when a value is received from an unbuffered channel, the receiver will block until another goroutine sends a value.
+Unbuffered channels are often used for synchronization between goroutines, ensuring that the sender and receiver are in sync and ready to communicate.
+In simple, ek data ayega fir aage jayega, jb tk aage nhi gya tb tk naya data ni aa skta.
+E.g: When you need to ensure that two goroutines are in sync and are communicating immediately without any delay. 
+
+Buffered Channel:
+A buffered channel has a capacity to store a certain number of values. When the channel is created with a capacity, it can accept that many values without the sender blocking.
+If the buffer is full, further sends will block until there is space available in the buffer.
+Similarly, when receiving from a buffered channel, the receiver will block only if the buffer is empty.
+Buffered channels are useful when you want a sender to be able to continue sending values without waiting for the receiver to process them immediately.
+In simple, Ismein thoda space hota hai andar. Tu 2-3 cheez daal sakta hai, bhale hi doosra banda receive karne ko ready na ho. Yeh thoda flexible hai, par buffer bhar gaya toh phir wait karna padega.
+E.g: Logging or monitoring systems where you want to send data but don't want to slow down the main operation.
+
+
+// Creating an unbuffered channel that can carry integers
+ch := make(chan int)
+
+// Creating a buffered channel with a capacity of 3 to carry strings
+ch := make(chan string, 3)
+
+close(ch) statement:
+purpose of closing a channel is to indicate that no more values will be sent on it.
+Closing a channel is a signal to receivers that they should stop expecting more data from the channel.
+
+
+select statement:
+The select statement provides a non-blocking way for a goroutine to wait on multiple channels.
+It checks if any of the listed cases are ready for communication (sending or receiving).
+If a case is ready, the corresponding code block following that case is executed.
+If none of the cases are ready and there is no default case, the select statement blocks until at least one case becomes ready.
+e.g:
+select {
+case msg1 := <-ch1:
+    fmt.Println("Received message from Sarah:", msg1)
+case msg2 := <-ch2:
+    fmt.Println("Received message from John:", msg2)
+case msg3 := <-ch3:
+    fmt.Println("Received message from Emily:", msg3)
+default:
+    fmt.Println("Nobody called. Just waiting.")
+}
+
+When defining a function that takes a channel as a parameter, you can specify whether the channel is meant to only send or receive values using channel directions.
+func sendData(ch chan<- int) {
+    // Function can only send data into 'ch'
+}
+func receiveData(ch <-chan int) {
+    // Function can only receive data from 'ch'
+}
+
+
+In Go, you can check if a buffered channel is full by using the len function on the channel. The len function returns the number of elements currently in the channel buffer.
+channel := make(chan int, 10)
+
+// Check if channel is full
+if len(channel) == cap(channel) {
+    fmt.Println("Channel is full")
+}

@@ -1,0 +1,6 @@
+x := 10
+    if y := x * 2; y > 5 {
+        ...
+    }
+
+In Go, you can combine variable declaration and assignment with a condition in an if statement using this syntax. 

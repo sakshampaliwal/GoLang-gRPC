@@ -1,0 +1,43 @@
+for initialization; condition; update {
+  statement(s)
+}
+
+for i := 1; i <= 5; i++ {
+    fmt.Println(i)
+}
+
+i:= 0 
+for i < 3 { 
+    i += 2 
+} 
+
+Range:
+
+for index, value := range collection {
+    // Loop body
+}
+
+Here,Index and value represents the current index and value of the element being iterated over in the collection.
+
+Iterating over a String:
+
+str := "hello"
+for index, char := range str {
+    fmt.Printf("Index: %d, Character: %c\n", index, char)
+}
+
+Iterating over a Map:
+colors := map[string]string{
+        "red":    "#ff0000",
+        "green":  "#00ff00",
+        "blue":   "#0000ff",
+}
+for key, value := range colors {
+    fmt.Printf("Key: %s, Value: %s\n", key, value)
+}
+
+Note:
+In Go, when you use the range keyword to iterate over a slice or an array, you have the option to receive both the 
+index and the value of each element. However, if you're not interested in the index and only care about the value you can use the underscore _ to signify that you want to discard the index variable.
+for _, char := range str {...}
+

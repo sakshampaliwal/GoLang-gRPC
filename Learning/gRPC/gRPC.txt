@@ -1,0 +1,99 @@
+gRPC:
+gRPC is a high-performance remote procedure call RPC framework, given by Google. It is open-source and enables client-server communication over the transport protocol HTTP2.
+It is now a CNCF Project.
+In Golang, gRPC is implemented through the use of protocol buffers and code generation, which provides a fast and efficient way to build client-server applications.
+
+Overall, there are two ways of creating web services, Rest API and RPC.
+
+there are two primary models for API design: RPC and REST. 
+RPC is a programming model that enables client applications to call functions or procedures on remote server applications as if they were local function calls. 
+
+GRPC clients and servers can run and communicate with each other in various environments, including a user's desktop or servers inside Google's network. Furthermore, gRPC clients can be written in a number of popular programming languages, including (but not limited to):Java, C# and C++, Objective-C, Ruby, Python, Go
+
+developers can create a gRPC server in Java with clients in Python, Ruby or Go.
+GRPC is also built upon protocol buffers, also known as protobuf. Protocol buffers are Google's tool for sequencing structured data, which allows for communication and data storage that can be predicted and analyzed.
+GRPC, like other RPC systems, revolves around the idea of defining a service, such as identifying the methods that can be remotely called with their parameters and return types.
+
+A RPC is a form of Client-Server Communication that uses a function call rather than a usual HTTP call.
+
+It uses IDL (Interface Definition Language) as a form of contract on functions to be called and on the data type.
+
+gRPC does replicate this architectural style of client server communication, via function calls.
+
+So gRPC is technically not a new concept. Rather it was adopted from this old technique and improved upon, making it very popular in just the span of 5 years.
+
+gRPC is popular because microservices are very popular.
+
+Microservices will often be running several services in different programming languages. They'll also often have a lot of service to service interactions.
+
+This is where gRPC helps out the most by providing the support and capability to solve the typical issues that arise from those situations.
+Some of the services might also be written in different languages and gRPC comes with multiple libraries to support that.
+
+HTTP/2 is one of the big reasons why gRPC can perform so well. 
+In a traditional HTTP protocol, is not possible to send multiple requests or get multiple responses together in a single connection. A new connection will need to be created for each of them.
+
+This kind of request/response multiplexing is made possible in HTTP/2 with the introduction of a new HTTP/2 layer called binary framing.
+
+Serialization:
+Serialization in gRPC refers to the process of converting data structures or objects into a format that can be easily transmitted over the network and reconstructed on the receiving end. In the context of gRPC, Protocol Buffers (protobuf) is the default serialization mechanism used.
+
+Protocol Buffers(protobuf):
+Protobuf is like a language for data. It helps programs talk to each other by defining a common way to structure and serialize (convert to a compact binary format) data.
+Protobuf is the most commonly used IDL (Interface Definition Language) for gRPC. It's where you basically store your data and function contracts in the form of a proto file.
+As this is in the form of a contract, both the client and server need to have the same proto file. The proto file acts as the intermediary contract for client to call any available functions from the server.
+If you have information you want to send from one program to another. Protobuf helps you define how that information should look in a simple and efficient way.
+It's similar to how you might use JSON or XML to structure data, but Protobuf is more compact and faster.
+Protobuf, is Google’s serialization/deserialization protocol that enables the easy definition of services and auto-generation of client libraries. 
+Its current version is proto3, which has the latest features and is easier to use.
+
+1. Start by defining the structure of the messages you want to send between your client and server. This is done using a special file called a .proto file.
+2. Use a tool called Protocol Buffers compiler (protoc) to compile your .proto file. This generates code in your preferred programming language (like Java, Python, C++, etc.).
+   This generated code includes classes or structures that help in encoding and decoding your messages.
+3. Write code for both client and the server using generated classes. On the client side, you create a message and use the generated code to serialize it into a compact binary format.
+   On the server side, you use the generated code to deserialize the received binary data back into a usable message.
+4. The client initiates a connection to the server. gRPC uses HTTP/2 as the underlying transport protocol, allowing for efficient communication.
+5. Client sends a serialized message to the server.
+6. Server receives the message, deserializes it, processes the request, and sends back a response (if applicable).
+
+
+You don't have to manually write all the code to send and receive these messages in your programming language. Tools like protoc automatically generate this code for you.
+This generated code handles the nitty-gritty details of how data is sent between the client (the program making the request) and the server (the program providing the service).
+So, you define what your data looks like using Protobuf, and the code generation tools do the heavy lifting to make sure your programs can talk to each other easily and efficiently.
+
+Overhead/Header Data:
+This data is used for communication and routing purposes. It typically includes metadata, protocol-specific information, and identifiers such as source and destination addresses.
+Once the message reaches its destination, the overhead or header data is often removed, leaving only the essential payload for further processing.
+
+
+Payload:
+the data we are actually sending and receiving is the payload.
+
+Use Case:
+Imagine that you're building a ride-hailing application that has two services: one is an app for the riders written in Go and another is an app for the drivers written in Java. Both services need to exchange information about ride requests, driver availability, and ride status updates. This is a great opportunity to use gRPC!
+
+
+Downside:
+one major downside of gRPC is low browser support, limiting it to internal systems.
+In contrast, REST is supported by all browsers. Moreover, it has wider adoption and is an excellent choice for a company that wants to use a proven format. 
+
+Types of RPC:
+
+1. Unary RPC: client sends a single request to the server and receives a single response in return.
+2. Server Streaming RPC: the client sends a single request to the server and receives a stream of responses.
+   E.g: Downloading a large file in chunks, subscribing to a live feed.
+3. Client Streaming RPC: the client sends a stream of requests to the server and receives a single response.
+   E.g: Uploading a large file in chunks, sending sensor data over time.
+4. Bidirectional RPC: allows both the client and server to send a stream of messages independently.
+   E.g: Chat applications, multiplayer games, live video streaming.
+
+Blogs that help:
+https://www.koyeb.com/blog/what-is-grpc
+https://www.freecodecamp.org/news/what-is-grpc-protocol-buffers-stream-architecture/
+https://www.wallarm.com/what/the-concept-of-grpc
+
+
+Install Grpc: 
+https://github.com/protocolbuffers/protobuf/releases/tag/v25.2
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+

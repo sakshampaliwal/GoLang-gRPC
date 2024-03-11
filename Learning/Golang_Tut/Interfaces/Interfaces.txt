@@ -1,0 +1,4 @@
+An interface is like a contract or a blueprint that describes what something can do without getting into the specifics of how it does it.
+
+In Java this is also called Interfaces
+In Java, a struct-like data structure is often represented using a class. 

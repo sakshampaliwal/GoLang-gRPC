@@ -1,0 +1,85 @@
+Concurrency:
+Concurrency means that the application has more than one thing to do at the same time. It's about creating multiple processes executing independently.
+
+"Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once."
+
+Let's assume a simple ecommerce website and evaluate the list of concurrent tasks that it needs to execute:
+
+Running a banner on the top with the latest deals and products.
+Display the count of currently online users of the website.
+Update the user cart details when products are selected.
+Keeping the time counter for the next “Big Billion Sale” and so on.
+The ecommerce website needs to have all these tasks running at the same time to keep the customer engaged with the application and make the website attractive to the user and draw more business.
+
+So, a simple application/website could be a set of multiple tasks running in the background to satisfy the business requirement.
+
+
+GoRoutines are a Golang wrapper on top of threads and managed by Go runtime rather than the operating system.
+A Goroutine is much like a thread to accomplish multiple tasks, but consumes fewer resources than OS threads. 
+
+In Go, a goroutine is a lightweight thread of execution. It's a way to achieve concurrency in your programs.
+we use goroutines to create concurrent programs. Concurrent programs are able to run multiple processes at the same time.
+
+
+Creation:
+We can convert a regular function to a goroutine by calling the function using the go keyword. For example,
+func display() {
+  // code inside the function
+}
+
+// start goroutine
+go display()
+
+Here, display() is a goroutine.
+
+Working:
+
+// create a function
+func display(message string) {
+
+  fmt.Println(message)
+}
+
+func main() {
+
+  // call goroutine
+  go display("Process 1")
+
+  display("Process 2")
+}
+
+Output: Process 2
+
+Here, the second call is executed immediately and the program terminates without completing the first function call.
+
+
+E.g:
+// display function prints the given string 6 times with a 1-second delay
+func display(str string) {
+    for i := 0; i < 6; i++ { // Loop 6 times
+        time.Sleep(1 * time.Second) // Wait for 1 second
+        fmt.Println(str) // Print the string
+    }
+}
+
+func main() {
+    // Calling display function as a goroutine
+    go display("Welcome")
+
+    // Calling display function directly
+    display("GeeksforGeeks")
+}
+
+Output:
+Welcome
+GeeksforGeeks
+GeeksforGeeks
+Welcome
+Welcome
+GeeksforGeeks
+GeeksforGeeks
+Welcome
+Welcome
+GeeksforGeeks
+GeeksforGeeks
+

@@ -1,0 +1,118 @@
+A declaration begins with the func keyword, 
+func SimpleFunction() {
+	fmt.Println("Hello World")
+}
+
+func main() {
+	SimpleFunction()
+}
+
+Function with arguments:
+func add(x int, y int) {
+	total := 0
+	total = x + y
+	fmt.Println(total)
+}
+
+
+Note the return statement is required when a return value is declared as part of the function's signature.
+func add(x int, y int) int {
+	total := 0
+	total = x + y
+	return total
+}
+
+func main() {
+	// Accepting return value in varaible
+	sum := add(20, 30)
+	fmt.Println(sum)
+}
+
+In Go, you can name the return values of a function:
+// Function named 'add' with named return value 'total'
+func add(x, y int) (total int) {
+    // Assign the sum of x and y to the named return value 'total'
+    total = x + y
+    // 'total' will be automatically returned because it's a named return value
+    return // 'return' statement is optional when using named return values
+}
+
+func main() {
+    // Call the 'add' function
+    result := add(5, 3)
+    fmt.Println("Sum:", result) // Output: Sum: 8
+}
+
+Golang Functions Returning Multiple Values:
+func rectangle(l int, b int) (area int, parameter int) {
+	parameter = 2 * (l + b)
+	area = l * b
+	return // Return statement without specify variable name
+}
+
+func main() {
+	var a, p int
+	a, p = rectangle(20, 30)
+	fmt.Println("Area:", a)
+	fmt.Println("Parameter:", p)
+}
+
+and
+
+// Function named 'divide' that takes two integers as input
+// and returns two integers as output
+func divide(dividend, divisor int) (int, int) {
+    // Check if divisor is zero to avoid division by zero
+    if divisor == 0 {
+        // Return 0, 0 indicating error condition
+        return 0, 0
+    }
+    // Return both quotient and remainder
+    return dividend / divisor, dividend % divisor
+}
+
+func main() {
+    // Call the 'divide' function
+    quotient, remainder := divide(10, 3)
+    // Print the results
+    fmt.Println("Quotient:", quotient)   // Output: Quotient: 3
+    fmt.Println("Remainder:", remainder) // Output: Remainder: 1
+}
+
+Golang Passing Address to a Function:
+func update(a *int, t *string) {
+	*a = *a + 5      // defrencing pointer address
+	*t = *t + " Doe" // defrencing pointer address
+	return
+}
+
+func main() {
+	var age = 20
+	var text = "John"
+	fmt.Println("Before:", text, age)
+
+	update(&age, &text)
+
+	fmt.Println("After :", text, age)
+}
+
+Anonymous Function:
+In Go, anonymous functions are functions without a name. Anonymous functions are useful when you need to define a function inline without explicitly naming it.
+
+add := func(x, y int) int {
+        return x + y
+    }
+
+    // Calling the anonymous function via the variable 'add'
+    sum := add(3, 5)
+    fmt.Println("Sum:", sum) // Output: Sum: 8
+
+
+
+Naming Convention:
+
+If the functions with names that start with an uppercase letter will be exported to other packages. 
+If the function name starts with a lowercase letter, it won't be exported to other packages, but you can call this function within the same package.
+
+If a name consists of multiple words, each word after the first should be capitalized like this: empName, EmpAddress, etc.
+function names are case-sensitive (car, Car and CAR are three different variables).

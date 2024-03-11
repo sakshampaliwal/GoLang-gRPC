@@ -1,0 +1,45 @@
+func hello(w http.ResponseWriter, _ *http.Request) {
+    fmt.Fprintf(w, "Hello")
+}
+
+w http.ResponseWriter: This parameter represents the HTTP response writer. It's used to construct and send the HTTP response back to the client. You write the response data to this writer.
+_ *http.Request: This parameter represents the HTTP request received from the client. However, in this function, it's not used, so it's named _ (underscore) to indicate that it's a blank identifier, meaning we're ignoring it. We don't need the request object for this particular handler.
+
+---
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	resp, err := http.Get("http://example.com/")
+	if err != nil {
+		// handle error
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// handle error
+	}
+
+	fmt.Println(string(body))
+}
+
+In Go, the standard library provides a package called "net/http" that allows developers to easily create HTTP clients.
+Once you have your HTTP client, you can use the "http.NewRequest" function to create an HTTP request object. This function takes several arguments, including the HTTP method (such as "GET" or "POST"), the URL to request, and an optional request body.
+You can then use the "http.Client.Do" method to send the HTTP request and receive the HTTP response. This method takes the HTTP request object as an argument and returns an HTTP response object, as well as an error value that indicates whether the request was successful.
+
+In Go, it's essential to close resources such as network connections, file handles, or HTTP response bodies when you're done using them. Failing to close resources can lead to resource leaks, which may eventually exhaust system resources and cause your program to misbehave or crash.
+
+defer resp.Body.Close():
+The line defer resp.Body.Close() is used to defer (schedule) the execution of the resp.Body.Close() function until the surrounding function (main function in this case) returns. 
+The defer keyword in Go is used to schedule a function call to be executed when the surrounding function returns.
+
+ioutil.ReadAll(resp.Body):
+When making HTTP requests using the net/http package, you often need to read the response body returned by the server.
+ is used when you need to read all the data from an io.Reader into memory. It's commonly used with HTTP response bodies, file operations, data transformation.
+ 

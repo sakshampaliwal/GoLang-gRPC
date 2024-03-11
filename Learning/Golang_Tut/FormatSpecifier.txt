@@ -1,0 +1,41 @@
+Format Specifier:
+It is a special string or character that defines how a value should be formatted when it is output to a console, file, or other output stream. It tells the formatting function how to interpret and present the given value.
+In Go's fmt package, which provides functions like Printf, Sprintf, and Fprintf for formatted I/O, 
+format specifiers are prefixed with a percent sign % followed by a character that represents the type of formatting to be applied. 
+For example, %d is a format specifier for integers, %f for floating-point numbers, %s for strings, etc.
+
+General:
+
+%v: Default format for the value.
+%+v: Adds field names when printing structs.
+%#v: Go-syntax representation of the value.
+%T: Go-syntax representation of the type of the value.
+Integer Types:
+
+%d: Decimal (base 10).
+%x, %X: Hexadecimal (base 16).
+%o: Octal (base 8).
+%b: Binary (base 2).
+Floating Point Types:
+
+%f: Decimal point, no exponent.
+%e, %E: Scientific notation.
+%g, %G: Shorter of %e or %f.
+String and Slice Types:
+
+%s: String without interpretation (e.g., uninterpreted bytes).
+%q: Quoted string safely escaped with Go syntax.
+%x: Hexadecimal with two characters per byte.
+Pointer Types:
+
+%p: Pointer address representation in base 16, with leading 0x.
+
+The make function takes as argument the type of the map and it returns an initialized map.
+
+Example:
+var employee = make(map[string]int)
+	employee["Mark"] = 10
+	employee["Sandy"] = 20
+
+To determine how many items (key-value pairs) a map has, use built-in len() function.
+The len() function will return zero for an uninitialized map.

@@ -1,0 +1,14 @@
+A goroutine is a lightweight thread of execution in the Go programming language. 
+It is similar to a thread in other programming languages, but it is managed by the Go runtime rather than the operating system. 
+Goroutines allow concurrent execution of functions in a program.
+
+You can start a new Go routine by using the go keyword followed by a function call. This function will then be executed concurrently in its own Go routine.
+
+sum()     // A normal function call that executes sum synchronously and waits for completing it
+go sum()  // A goroutine that executes sum asynchronously and doesn't wait for completing it
+
+The go keyword makes the function call to return immediately, while the function starts running in the background 
+as a goroutine and the rest of the program continues its execution. 
+The main function of every Golang program is started using a goroutine, so every Golang program runs at least one goroutine.
+
+

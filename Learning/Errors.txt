@@ -1,0 +1,34 @@
+gopls was not able to find modules in your workspace. When outside of GOPATH, gopls needs to know which modules you are working on. You can fix this by opening your workspace to a folder inside a Go module, or by using a go.work file to specify multiple modules. See the documentation for more information on setting up
+
+Solution:
+This issue arises because you are using multiple Go modules to solve this you can use a go.work file. This file should be placed in the root of your workspace and should list the paths to the modules.
+From Go 1.18 onwards there is native support for multi-module workspaces. This is done by having a go.work file present in your parent directory.
+
+$ tree /my/parent/dir
+/my/parent/dir
+├── project-one
+│   ├── go.mod
+│   ├── project-one.go
+│   └── project-one_test.go
+└── project-two
+    ├── go.mod
+    ├── project-two.go
+    └── project-two_test.go
+
+Create and populate the file by executing go work:
+cd /my/parent/dir
+go work init
+go work use project-one
+go work use project-two
+
+
+This will add a go.work file in your parent directory that contains a list of directories you marked for usage.
+
+
+2)
+could not import /gencode/helloworld_grpc.pb.go (no required module provides package "/gencode/helloworld_grpc.pb.go")compiler
+
+Solution:
+This issue is because you have not specified correct name of the pacakge where the generated code is present. let's say our generated code is in /gencode folder then if we specifiy pb "/gencode" then it will not gonna work. To make it work you should start with the module name which is on go.mod file. like helloworld/gencode
+Sometimes it is due to not presence of generated code, so generate code from the command: protoc --go_out=. --go-grpc_out=. protofile.proto and then check then error might go away.
+

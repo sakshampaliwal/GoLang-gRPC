@@ -1,0 +1,74 @@
+import "github.com/stretchr/testify/mock"
+
+type MyMockedObject struct {
+    mock.Mock
+}
+
+MyMockedObject is a struct that embeds mock.Mock. 
+Embedding means that MyMockedObject inherits all the fields and methods of mock.Mock. 
+
+---
+On(methodName string, arguments ...interface{}) Call:
+This function is used to set up expectations for method calls on the mock object.
+methodName is the name of the method to mock.
+arguments are optional and represent the expected arguments for the method call.
+E.g:
+mockDB := new(MockDatabase)
+mockDB.On("GetUserName", 1).Return("John")
+
+
+Return(arguments ...interface{}) Call:
+This function is used to specify the return values for the method call.
+arguments are the values that the mocked method should return.
+E.g:
+mockDB := new(MockDatabase)
+mockDB.On("GetUserName", 1).Return("John")
+
+
+Once() CallCountArgument:
+It is used to specify that the method should be called only once.
+mockDB := new(MockDatabase)
+mockDB.On("GetUserName", 1).Return("John").Once()
+
+
+Twice() CallCountArgument:
+This function is used to specify that the method should be called exactly twice.
+E.g:
+mockDB := new(MockDatabase)
+mockDB.On("GetUserName", 1).Return("John").Twice()
+
+
+Any() Argument:
+to specify that any value is acceptable for an argument in a method call expectation.
+E.g:
+mockDB := new(MockDatabase)
+mockDB.On("GetUserName", mock.Anything).Return("John")
+
+
+OnAnyCall() Call:
+to set up expectations for any method call on the mock object.
+E.g:
+mockDB := new(MockDatabase)
+mockDB.OnAnyCall().Return("SomeValue")
+
+
+
+AssertExpectations(t *testing.T):
+AssertNumberOfCalls(t *testing.T, methodName string, expectedCalls int):
+It is used to assert the number of times a method was called.
+methodName is the name of the method being checked.
+expectedCalls is the expected number of calls to the method.
+
+E.g:
+mockDB := new(MockDatabase)
+mockDB.GetUserName(1)
+mockDB.GetUserName(1)
+mockDB.AssertNumberOfCalls(t, "GetUserName", 2)
+
+
+
+
+
+
+
+
