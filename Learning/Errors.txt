@@ -32,3 +32,5 @@ Solution:
 This issue is because you have not specified correct name of the pacakge where the generated code is present. let's say our generated code is in /gencode folder then if we specifiy pb "/gencode" then it will not gonna work. To make it work you should start with the module name which is on go.mod file. like helloworld/gencode
 Sometimes it is due to not presence of generated code, so generate code from the command: protoc --go_out=. --go-grpc_out=. protofile.proto and then check then error might go away.
 
+Remember: Package names should be lowercase. Don’t use snake_case or camelCase in package names. In go, package names are not plural. This is surprising to programmers who came from other languages and are retaining an old habit of pluralizing names. Don’t name a package httputils, but httputil!
+Avoid exposing your custom repository structure to your users. Align well with the GOPATH conventions. Avoid having src/, pkg/ sections in your import paths.
